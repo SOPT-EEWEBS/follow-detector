@@ -21,3 +21,5 @@ const colors = {
 const theme: DefaultTheme = {
   colors,
 };
+
+export default theme;
