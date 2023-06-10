@@ -7,10 +7,18 @@ import Follower from '../../components/follower/Follower';
 import { useRecoilState } from 'recoil';
 import { profileState } from '../../recoil/profile';
 import { getProfile } from '../../api/get/getProfile';
-import { getFollowers, getFollowing } from '../../api/get/getFollowList';
+import { getFollowers, getFollowing, getFollowerList } from '../../api/get/getFollowList';
+import { followerListState } from '../../recoil/followerList';
 
 const Home = () => {
   const [userProfile, setUserProfile] = useRecoilState(profileState);
+  const [followerList, setFollowerList] = useRecoilState(followerListState);
+
+  // 팔로워 리스트 가져오는 함수
+  const handleGetFollowerList = async () => {
+    const response = await getFollowerList();
+    if (response) setFollowerList(response);
+  };
 
   const handleGetProfile = async () => {
     const response = await getProfile();
@@ -27,6 +35,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    handleGetFollowerList();
     handleGetProfile();
     handleGetFollowers();
     handleGetFollowing();
