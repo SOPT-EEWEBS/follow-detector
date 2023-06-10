@@ -16,6 +16,6 @@ const StWrapper = styled.main`
   width: 100%;
   margin-top: 10rem;
 
-  display: flex;
+  display: grid;
   justify-content: center;
 `;
