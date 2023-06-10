@@ -141,6 +141,12 @@ export const reset = css`
 export const GlobalStyle = createGlobalStyle`
 ${reset}
 
+@font-face {
+    font-family: 'TTWanjudaedunsancheB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 
 #root, body, html {
     margin: 0 auto;
@@ -149,6 +155,7 @@ ${reset}
 
 * {
     box-sizing: border-box;
+    font-family: 'TTWanjudaedunsancheB';
 }
     
 `;

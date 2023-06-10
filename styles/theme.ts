@@ -18,6 +18,11 @@ const colors = {
   darkPink_modal: '#d03c5a',
 };
 
+const fonts = {
+  font: 'TTWanjudaedunsancheB',
+};
+
 const theme: DefaultTheme = {
   colors,
+  fonts,
 };
