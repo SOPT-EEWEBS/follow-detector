@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { profileState } from '../../recoil/profile';
+import Image from 'next/image';
 
 const Profile = () => {
   const userProfile = useRecoilValue(profileState);
@@ -9,7 +10,7 @@ const Profile = () => {
 
   return (
     <StWrapper>
-      <StUserProfileImg src={avatar_url} alt="avatar" />
+      <Image src={avatar_url} alt="avatar_url" width={160} height={160} />
       <StUserName>{login}</StUserName>
       <StUserInfoBlock>
         <StUserDetailInfoBlock>
@@ -39,13 +40,6 @@ const StWrapper = styled.section`
   border-radius: 0.7rem;
 `;
 
-const StUserProfileImg = styled.img`
-  width: 10rem;
-  height: 10rem;
-
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.pink};
-`;
 const StUserName = styled.p`
   margin: 1rem 0;
 `;
