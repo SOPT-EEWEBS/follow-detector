@@ -1,10 +1,17 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { followerListState } from '../../recoil/followerList';
+import { useState } from 'react';
+
+interface FollowButtonProps {
+  isFollowing: boolean;
+}
 
 const Follower = () => {
   const followerList = useRecoilValue(followerListState);
   const followerNameList = followerList.map((it) => it.login);
+
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   return (
     <StWrapper>
@@ -14,7 +21,9 @@ const Follower = () => {
           return (
             <StFollowerBlock key={idx}>
               <StFollowerName>{name}</StFollowerName>
-              <StFollowBtn>Following</StFollowBtn>
+              <StFollowBtn onClick={() => setIsFollowing(!isFollowing)} isFollowing={isFollowing}>
+                {isFollowing ? 'following' : 'follow'}
+              </StFollowBtn>
             </StFollowerBlock>
           );
         })}
@@ -59,13 +68,13 @@ const StFollowerName = styled.p`
   margin-right: 1rem;
 `;
 
-const StFollowBtn = styled.button`
+const StFollowBtn = styled.button<FollowButtonProps>`
   width: 5rem;
   padding: 0.3rem;
   margin-left: 1rem;
   border: none;
   border-radius: 1rem;
 
-  background-color: ${({ theme }) => theme.colors.lightPink};
+  background-color: ${({ isFollowing, theme }) => isFollowing ? theme.colors.lightPurple : theme.colors.lightPink}; 
   font-size: 1rem;
 `;
