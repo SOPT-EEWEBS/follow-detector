@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import Header from '../../components/header/Header';
 import MainLayout from '../../Layout/MainLayout';
 import Profile from '../../components/profile/Profile';
+import Follower from '../../components/follower/Follower';
 import { useRecoilState } from 'recoil';
 import { profileState } from '../../recoil/profile';
 import { getProfile } from '../../api/get/getProfile';
@@ -36,6 +37,7 @@ const Home = () => {
       <Header />
       <MainLayout>
         <Profile />
+        <Follower />
       </MainLayout>
     </div>
   );
