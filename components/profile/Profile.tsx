@@ -1,19 +1,24 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { profileState } from '../../recoil/profile';
 
 const Profile = () => {
+  const userProfile = useRecoilValue(profileState);
+  const { login, avatar_url, followers, following } = userProfile;
+
   return (
     <StWrapper>
-      <StUserProfileImg />
-      <StUserName>woogisea</StUserName>
+      <StUserProfileImg src={avatar_url} alt="avatar" />
+      <StUserName>{login}</StUserName>
       <StUserInfoBlock>
         <StUserDetailInfoBlock>
-          <StUserDetailTitle>follower</StUserDetailTitle>
-          <StUserDetailDesc>10</StUserDetailDesc>
+          <StUserDetailTitle>followers</StUserDetailTitle>
+          <StUserDetailDesc>{followers}</StUserDetailDesc>
         </StUserDetailInfoBlock>
         <StUserDetailInfoBlock>
           <StUserDetailTitle>following</StUserDetailTitle>
-          <StUserDetailDesc>10</StUserDetailDesc>
+          <StUserDetailDesc>{following}</StUserDetailDesc>
         </StUserDetailInfoBlock>
       </StUserInfoBlock>
     </StWrapper>
@@ -34,7 +39,7 @@ const StWrapper = styled.section`
   border-radius: 0.7rem;
 `;
 
-const StUserProfileImg = styled.div`
+const StUserProfileImg = styled.img`
   width: 10rem;
   height: 10rem;
 
