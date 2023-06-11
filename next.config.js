@@ -1,11 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  compiler: {
-    styledComponents: true,
-  },
-  images: {
-    domains: ['avatars.githubusercontent.com'],
-  },
-};
+const nextConfig = {}
 
-module.exports = nextConfig;
+module.exports = nextConfig

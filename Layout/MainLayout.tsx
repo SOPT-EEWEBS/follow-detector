@@ -14,8 +14,7 @@ export default MainLayout;
 
 const StWrapper = styled.main`
   width: 100%;
-  margin-top: 10rem;
 
-  display: grid;
+  display: flex;
   justify-content: center;
 `;

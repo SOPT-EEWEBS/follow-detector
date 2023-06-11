@@ -26,5 +26,3 @@ const theme: DefaultTheme = {
   colors,
   fonts,
 };
-
-export default theme;

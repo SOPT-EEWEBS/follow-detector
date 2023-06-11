@@ -151,12 +151,11 @@ ${reset}
 #root, body, html {
     margin: 0 auto;
     overflow-y: auto;
-    
-    font-family: 'TTWanjudaedunsancheB';
 }
 
 * {
     box-sizing: border-box;
+    font-family: 'TTWanjudaedunsancheB';
 }
     
 `;
