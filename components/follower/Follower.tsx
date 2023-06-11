@@ -22,7 +22,10 @@ const Follower = ({ follwerList }: FollwerProps) => {
                 <StFollowerName>{name}</StFollowerName>
                 <StFollowBtn
                   onClick={() => console.log(`click ${name}`)}
-                  following={sortFollowings.map((it) => it.login).includes(name)}>
+                  following={sortFollowings
+                    .map((it) => it.login)
+                    .includes(name)
+                    .toString()}>
                   {sortFollowings.map((it) => it.login).includes(name) ? 'following' : 'follow'}
                 </StFollowBtn>
               </StFollowerBlock>
@@ -38,7 +41,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{follwings.login}</StFollowerName>
-                <StFollowBtn onClick={() => console.log(`click ${follwings.login}`)} following={true}>
+                <StFollowBtn onClick={() => console.log(`click ${follwings.login}`)} following={'true'}>
                   following
                 </StFollowBtn>
               </StFollowerBlock>
@@ -108,7 +111,7 @@ const StFollowerName = styled.p`
   margin-right: 1rem;
 `;
 
-const StFollowBtn = styled.button<{ following?: boolean }>`
+const StFollowBtn = styled.button<{ following?: string }>`
   width: 5rem;
   padding: 0.3rem;
   margin-left: 1rem;
@@ -118,7 +121,7 @@ const StFollowBtn = styled.button<{ following?: boolean }>`
   background-color: ${({ theme }) => theme.colors.lightPurple};
 
   ${(props) =>
-    props.following &&
+    props.following == 'true' &&
     css`
       background-color: ${theme.colors.darkPink_modal};
       color: white;
