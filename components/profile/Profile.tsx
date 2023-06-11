@@ -10,7 +10,7 @@ const Profile = () => {
 
   return (
     <StWrapper>
-      <Image src={avatar_url} alt="avatar_url" width={160} height={160} />
+      <img src={avatar_url} alt="avatar_url" width={160} height={160} />
       <StUserName>{login}</StUserName>
       <StUserInfoBlock>
         <StUserDetailInfoBlock>
