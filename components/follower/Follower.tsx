@@ -26,7 +26,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
                     .map((it) => it.login)
                     .includes(name)
                     .toString()}>
-                  {sortFollowings.map((it) => it.login).includes(name) ? 'following' : 'follow'}
+                  {sortFollowings.map((it) => it.login).includes(name) ? 'follow' : 'following'}
                 </StFollowBtn>
               </StFollowerBlock>
             );
@@ -42,7 +42,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
               <StFollowerBlock key={idx}>
                 <StFollowerName>{follwings.login}</StFollowerName>
                 <StFollowBtn onClick={() => console.log(`click ${follwings.login}`)} following={'true'}>
-                  following
+                  follow
                 </StFollowBtn>
               </StFollowerBlock>
             );
@@ -57,7 +57,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{followers.login}</StFollowerName>
-                <StFollowBtn>follow</StFollowBtn>
+                <StFollowBtn>following</StFollowBtn>
               </StFollowerBlock>
             );
           })}
