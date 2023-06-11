@@ -8,12 +8,13 @@ import { useRecoilState } from 'recoil';
 import { profileState } from '../../recoil/profile';
 import { getProfile } from '../../api/get/getProfile';
 import { FollowInfo } from '../../types/follow';
-import { sortFollowerList } from '../../recoil/follow';
+import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
 
 const Home = () => {
   const [followerList, setFollowerList] = useState<string[]>([]);
   const [followingList, setFollowingList] = useState<string[]>([]);
   const [sortFollowers, setSortFollowers] = useRecoilState<FollowInfo[]>(sortFollowerList);
+  const [sortFollowing, setSortFollowing] = useRecoilState<FollowInfo[]>(sortFollowingList);
   const [userProfile, setUserProfile] = useRecoilState(profileState);
 
   const handleGetProfile = async () => {
@@ -54,6 +55,13 @@ const Home = () => {
     setSortFollowers(sortFollowers);
   };
 
+  const sortFolloing = () => {
+    const sortFollowing = followerList
+      .filter((login) => !followingList.includes(login))
+      .map((login) => ({ login } as FollowInfo));
+    setSortFollowing(sortFollowing);
+  };
+
   useEffect(() => {
     handleGetProfile();
     handleGetFollowers();
@@ -62,6 +70,7 @@ const Home = () => {
 
   useEffect(() => {
     sortFollower();
+    sortFolloing();
   }, [followerList, followingList]);
 
   return (
