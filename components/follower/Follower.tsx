@@ -9,7 +9,7 @@ interface FollowButtonProps {
 
 const Follower = () => {
   const followerList = useRecoilValue(followerListState);
-  const followerNameList = followerList.map((it) => it.login);
+  const followerNameList = followerList.map(({ login }) => login);
 
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
