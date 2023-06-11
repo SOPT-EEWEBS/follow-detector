@@ -18,3 +18,13 @@ export const getFollowing = async () => {
     console.error(e);
   }
 };
+
+// 추가
+export const getFollowerList = async () => {
+  try {
+    const response = await client.get<FollowInfo[]>('/user/followers?per_page=100');
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+};

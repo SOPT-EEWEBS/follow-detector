@@ -3,17 +3,27 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
 import MainLayout from '../../Layout/MainLayout';
 import Profile from '../../components/profile/Profile';
+import Follower from '../../components/follower/Follower';
 import { useRecoilState } from 'recoil';
 import { profileState } from '../../recoil/profile';
 import { getProfile } from '../../api/get/getProfile';
 import { FollowInfo } from '../../types/follow';
 import { sortFollowerList } from '../../recoil/follow';
+import { getFollowers, getFollowing, getFollowerList } from '../../api/get/getFollowList';
+import { followerListState } from '../../recoil/followerList';
 
 const Home = () => {
   const [followerList, setFollowerList] = useState<string[]>([]);
   const [followingList, setFollowingList] = useState<string[]>([]);
   const [sortFollowers, setSortFollowers] = useRecoilState<FollowInfo[]>(sortFollowerList);
   const [userProfile, setUserProfile] = useRecoilState(profileState);
+  const [followerList, setFollowerList] = useRecoilState(followerListState);
+
+  // 팔로워 리스트 가져오는 함수
+  const handleGetFollowerList = async () => {
+    const response = await getFollowerList();
+    if (response) setFollowerList(response);
+  };
 
   const handleGetProfile = async () => {
     const response = await getProfile();
@@ -54,6 +64,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    handleGetFollowerList();
     handleGetProfile();
     handleGetFollowers();
     handleGetFollowing();
@@ -68,6 +79,7 @@ const Home = () => {
       <Header />
       <MainLayout>
         <Profile />
+        <Follower />
       </MainLayout>
     </div>
   );
