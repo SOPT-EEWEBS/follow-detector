@@ -9,6 +9,7 @@ import { profileState } from '../../recoil/profile';
 import { getProfile } from '../../api/get/getProfile';
 import { FollowInfo } from '../../types/follow';
 import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
+import sortFollowList from '../../utils/sortFollowList';
 
 const Home = () => {
   const [followerList, setFollowerList] = useState<string[]>([]);
@@ -22,59 +23,52 @@ const Home = () => {
     if (response) setUserProfile(response);
   };
 
-  const handleGetFollowers = async () => {
-    const response = await fetch('https://api.github.com/user/followers?per_page=100', {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
-      },
-    });
-    const data = await response.json();
-    if (data) {
-      const followerIds = data.map(({ login }: FollowInfo) => login);
-      setFollowerList((prevList) => [...prevList, ...followerIds]);
+  const fetchFollowers = async () => {
+    try {
+      const response = await fetch('/api/followers');
+      if (response.ok) {
+        const data = await response.json();
+        const followerIds = data.followerIds;
+        setFollowerList((prevList) => [...prevList, ...followerIds]);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const handleGetFollowing = async () => {
-    const response = await fetch('https://api.github.com/user/following?per_page=100', {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
-      },
-    });
-    const data = await response.json();
-    if (data) {
-      const followingIds = data.map(({ login }: FollowInfo) => login);
-      setFollowingList((prevList) => [...prevList, ...followingIds]);
+  const fetchFollowings = async () => {
+    try {
+      const response = await fetch('/api/followings');
+      if (response.ok) {
+        const data = await response.json();
+        const followingIds = data.followingIds;
+        setFollowingList((prevList) => [...prevList, ...followingIds]);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
   const sortFollower = () => {
-    const sortFollowers = followingList
-      .filter((login) => !followerList.includes(login))
-      .map((login) => ({ login } as FollowInfo));
+    const sortFollowers = sortFollowList(followingList, followerList);
     setSortFollowers(sortFollowers);
   };
 
   const sortFollowing = () => {
-    const sortFollowings = followerList
-      .filter((login) => !followingList.includes(login))
-      .map((login) => ({ login } as FollowInfo));
+    const sortFollowings = sortFollowList(followerList, followingList);
     setSortFollowings(sortFollowings);
   };
 
   useEffect(() => {
     handleGetProfile();
-    handleGetFollowers();
-    handleGetFollowing();
+    fetchFollowers();
+    fetchFollowings();
   }, []);
 
   useEffect(() => {
     sortFollower();
     sortFollowing();
   }, [followerList, followingList]);
-
-  console.log(sortFollowings);
-  console.log(sortFollowers);
 
   return (
     <div>
