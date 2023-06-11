@@ -14,7 +14,7 @@ const Home = () => {
   const [followerList, setFollowerList] = useState<string[]>([]);
   const [followingList, setFollowingList] = useState<string[]>([]);
   const [sortFollowers, setSortFollowers] = useRecoilState<FollowInfo[]>(sortFollowerList);
-  const [sortFollowing, setSortFollowing] = useRecoilState<FollowInfo[]>(sortFollowingList);
+  const [sortFollowings, setSortFollowings] = useRecoilState<FollowInfo[]>(sortFollowingList);
   const [userProfile, setUserProfile] = useRecoilState(profileState);
 
   const handleGetProfile = async () => {
@@ -55,11 +55,11 @@ const Home = () => {
     setSortFollowers(sortFollowers);
   };
 
-  const sortFolloing = () => {
-    const sortFollowing = followerList
+  const sortFollowing = () => {
+    const sortFollowings = followerList
       .filter((login) => !followingList.includes(login))
       .map((login) => ({ login } as FollowInfo));
-    setSortFollowing(sortFollowing);
+    setSortFollowings(sortFollowings);
   };
 
   useEffect(() => {
@@ -70,8 +70,11 @@ const Home = () => {
 
   useEffect(() => {
     sortFollower();
-    sortFolloing();
+    sortFollowing();
   }, [followerList, followingList]);
+
+  console.log(sortFollowings);
+  console.log(sortFollowers);
 
   return (
     <div>
