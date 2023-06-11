@@ -73,9 +73,6 @@ const Home = () => {
     sortFollowing();
   }, [followerList, followingList]);
 
-  console.log(sortFollowings);
-  console.log(sortFollowers);
-
   return (
     <div>
       <Header />
