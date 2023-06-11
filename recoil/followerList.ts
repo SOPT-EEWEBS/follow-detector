@@ -5,7 +5,6 @@ export const followerListState = atom<FollowInfo[]>({
   key: 'followerList',
   default: [
     {
-      id: 0,
       login: '',
     },
   ],
