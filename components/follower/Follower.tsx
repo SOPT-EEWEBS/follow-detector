@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
 import theme from '../../styles/theme';
+import { followUser } from '../../api/put/followUser';
 
 interface FollwerProps {
   follwerList: string[];
@@ -17,11 +18,20 @@ const Follower = ({ follwerList }: FollwerProps) => {
         <StListTitle>나의 팔로워</StListTitle>
         <StFollowerListBlock>
           {follwerList.map((name, idx) => {
+            const handleFollow = async () => {
+              try {
+                await followUser({ userId: name });
+                alert(`${name} 팔로우 성공!`);
+                location.reload();
+              } catch (error) {
+                alert(`${name} 팔로우 실패!`);
+              }
+            };
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{name}</StFollowerName>
                 <StFollowBtn
-                  onClick={() => console.log(`click ${name}`)}
+                  onClick={handleFollow}
                   following={sortFollowings
                     .map((it) => it.login)
                     .includes(name)
@@ -37,11 +47,22 @@ const Follower = ({ follwerList }: FollwerProps) => {
       <StListWrapper>
         <StListTitle>내가 팔로우하지 않는 사람</StListTitle>
         <StFollowerListBlock>
-          {sortFollowings.map((follwings, idx) => {
+          {sortFollowings.map((followings, idx) => {
+            const { login } = followings;
+
+            const handleFollow = async () => {
+              try {
+                await followUser({ userId: login });
+                alert(`${login} 팔로우 성공!`);
+                location.reload();
+              } catch (error) {
+                alert(`${login} 팔로우 실패!`);
+              }
+            };
             return (
               <StFollowerBlock key={idx}>
-                <StFollowerName>{follwings.login}</StFollowerName>
-                <StFollowBtn onClick={() => console.log(`click ${follwings.login}`)} following={'true'}>
+                <StFollowerName>{login}</StFollowerName>
+                <StFollowBtn onClick={handleFollow} following={'true'}>
                   follow
                 </StFollowBtn>
               </StFollowerBlock>
