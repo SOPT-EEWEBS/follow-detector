@@ -13,6 +13,11 @@ const Follower = ({ follwerList }: FollwerProps) => {
   const sortFollowers = useRecoilValue(sortFollowerList);
   const sortFollowings = useRecoilValue(sortFollowingList);
 
+  // sortFollowings안에 포함되어 있는지 확인하는 함수
+  const inSortFollowings = (login: string) => {
+    return sortFollowings.map((it) => it.login).includes(login);
+  };
+
   // 맞팔하는 함수
   const handleFollow = async ({ login }: PutProps) => {
     try {
@@ -35,15 +40,13 @@ const Follower = ({ follwerList }: FollwerProps) => {
                 <StFollowerName>{login}</StFollowerName>
                 <StFollowBtn
                   onClick={() => {
-                    sortFollowings.map((it) => it.login).includes(login)
-                      ? handleFollow({ login })
-                      : alert(`${login}은 이미 팔로우 중입니다!`);
+                    inSortFollowings(login) ? handleFollow({ login }) : alert(`${login}은 이미 팔로우 중입니다!`);
                   }}
                   following={sortFollowings
                     .map((it) => it.login)
                     .includes(login)
                     .toString()}>
-                  {sortFollowings.map((it) => it.login).includes(login) ? 'follow' : 'following'}
+                  {inSortFollowings(login) ? 'follow' : 'following'}
                 </StFollowBtn>
               </StFollowerBlock>
             );
