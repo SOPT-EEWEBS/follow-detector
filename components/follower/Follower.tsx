@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
 import theme from '../../styles/theme';
 import { followUser } from '../../api/put/followUser';
+import { PutProps } from '../../api/put/followUser';
 
 interface FollwerProps {
   follwerList: string[];
@@ -12,35 +13,37 @@ const Follower = ({ follwerList }: FollwerProps) => {
   const sortFollowers = useRecoilValue(sortFollowerList);
   const sortFollowings = useRecoilValue(sortFollowingList);
 
+  // 맞팔하는 함수
+  const handleFollow = async ({ login }: PutProps) => {
+    try {
+      await followUser({ login });
+      alert(`${login} 팔로우 성공!`);
+      location.reload();
+    } catch (error) {
+      alert(`${login} 팔로우 실패!`);
+    }
+  };
+
   return (
     <StWrapper>
       <StListWrapper>
         <StListTitle>나의 팔로워</StListTitle>
         <StFollowerListBlock>
-          {follwerList.map((name, idx) => {
-            const handleFollow = async () => {
-              try {
-                await followUser({ userId: name });
-                alert(`${name} 팔로우 성공!`);
-                location.reload();
-              } catch (error) {
-                alert(`${name} 팔로우 실패!`);
-              }
-            };
+          {follwerList.map((login, idx) => {
             return (
               <StFollowerBlock key={idx}>
-                <StFollowerName>{name}</StFollowerName>
+                <StFollowerName>{login}</StFollowerName>
                 <StFollowBtn
                   onClick={() => {
-                    sortFollowings.map((it) => it.login).includes(name)
-                      ? handleFollow()
-                      : alert(`${name}은 이미 팔로우 중입니다!`);
+                    sortFollowings.map((it) => it.login).includes(login)
+                      ? handleFollow({ login })
+                      : alert(`${login}은 이미 팔로우 중입니다!`);
                   }}
                   following={sortFollowings
                     .map((it) => it.login)
-                    .includes(name)
+                    .includes(login)
                     .toString()}>
-                  {sortFollowings.map((it) => it.login).includes(name) ? 'follow' : 'following'}
+                  {sortFollowings.map((it) => it.login).includes(login) ? 'follow' : 'following'}
                 </StFollowBtn>
               </StFollowerBlock>
             );
@@ -53,20 +56,10 @@ const Follower = ({ follwerList }: FollwerProps) => {
         <StFollowerListBlock>
           {sortFollowings.map((followings, idx) => {
             const { login } = followings;
-
-            const handleFollow = async () => {
-              try {
-                await followUser({ userId: login });
-                alert(`${login} 팔로우 성공!`);
-                location.reload();
-              } catch (error) {
-                alert(`${login} 팔로우 실패!`);
-              }
-            };
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{login}</StFollowerName>
-                <StFollowBtn onClick={handleFollow} following={'true'}>
+                <StFollowBtn onClick={() => handleFollow({ login })} following={'true'}>
                   follow
                 </StFollowBtn>
               </StFollowerBlock>
