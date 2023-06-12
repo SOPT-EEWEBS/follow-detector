@@ -1,13 +1,13 @@
 import client from '../axios';
 
-interface PutProps {
-  userId: string;
+export interface PutProps {
+  login: string;
 }
 
 export const followUser = async (props: PutProps) => {
-  const { userId } = props;
+  const { login } = props;
   try {
-    const response = await client.put(`/user/following/${userId}`);
+    const response = await client.put(`/user/following/${login}`);
     return response.data;
   } catch (e) {
     console.error(e);
