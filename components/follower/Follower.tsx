@@ -2,8 +2,7 @@ import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
 import theme from '../../styles/theme';
-import { followUser } from '../../api/put/followUser';
-import { PutProps } from '../../api/put/followUser';
+import { PutProps, followUser } from '../../api/put/followUser';
 
 interface FollwerProps {
   follwerList: string[];
@@ -78,7 +77,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{followers.login}</StFollowerName>
-                <StFollowBtn>following</StFollowBtn>
+                <StFollowBtn onClick={() => alert(`${followers.login}은 이미 팔로우 중입니다!`)}>following</StFollowBtn>
               </StFollowerBlock>
             );
           })}
