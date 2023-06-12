@@ -31,7 +31,11 @@ const Follower = ({ follwerList }: FollwerProps) => {
               <StFollowerBlock key={idx}>
                 <StFollowerName>{name}</StFollowerName>
                 <StFollowBtn
-                  onClick={handleFollow}
+                  onClick={() => {
+                    sortFollowings.map((it) => it.login).includes(name)
+                      ? handleFollow()
+                      : alert(`${name}은 이미 팔로우 중입니다!`);
+                  }}
                   following={sortFollowings
                     .map((it) => it.login)
                     .includes(name)
