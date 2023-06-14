@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { sortFollowerList, sortFollowingList } from '../../recoil/follow';
 import theme from '../../styles/theme';
-import { PutProps, followUser } from '../../api/put/followUser';
+import { followUser } from '../../api/put/followUser';
 
 interface FollwerProps {
   follwerList: string[];
@@ -18,13 +18,13 @@ const Follower = ({ follwerList }: FollwerProps) => {
   };
 
   // 맞팔하는 함수
-  const handleFollow = async ({ login }: PutProps) => {
+  const handleFollow = async (userId: string) => {
     try {
-      await followUser({ login });
-      alert(`${login} 팔로우 성공!`);
+      await followUser(userId);
+      alert(`${userId} 팔로우 성공!`);
       location.reload();
     } catch (error) {
-      alert(`${login} 팔로우 실패!`);
+      alert(`${userId} 팔로우 실패!`);
     }
   };
 
@@ -33,19 +33,19 @@ const Follower = ({ follwerList }: FollwerProps) => {
       <StListWrapper>
         <StListTitle>나의 팔로워</StListTitle>
         <StFollowerListBlock>
-          {follwerList.map((login, idx) => {
+          {follwerList.map((userId, idx) => {
             return (
               <StFollowerBlock key={idx}>
-                <StFollowerName>{login}</StFollowerName>
+                <StFollowerName>{userId}</StFollowerName>
                 <StFollowBtn
                   onClick={() => {
-                    inSortFollowings(login) ? handleFollow({ login }) : alert(`${login}은 이미 팔로우 중입니다!`);
+                    inSortFollowings(userId) ? handleFollow(userId) : alert(`${userId}은 이미 팔로우 중입니다!`);
                   }}
                   following={sortFollowings
                     .map((it) => it.login)
-                    .includes(login)
+                    .includes(userId)
                     .toString()}>
-                  {inSortFollowings(login) ? 'follow' : 'following'}
+                  {inSortFollowings(userId) ? 'follow' : 'following'}
                 </StFollowBtn>
               </StFollowerBlock>
             );
@@ -61,7 +61,7 @@ const Follower = ({ follwerList }: FollwerProps) => {
             return (
               <StFollowerBlock key={idx}>
                 <StFollowerName>{login}</StFollowerName>
-                <StFollowBtn onClick={() => handleFollow({ login })} following={'true'}>
+                <StFollowBtn onClick={() => handleFollow(login)} following={'true'}>
                   follow
                 </StFollowBtn>
               </StFollowerBlock>
